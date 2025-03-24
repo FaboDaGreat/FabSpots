@@ -1,4 +1,3 @@
-import React from "react";
 import './SpotCard.css';
 
 const SpotCard = ({ spot }) => {
