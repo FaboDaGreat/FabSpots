@@ -26,7 +26,7 @@ const Splash = () => {
       getAllSpots()
     }
 
-  }, [isLoaded])
+  }, [isLoaded, dispatch])
 
   const spotDetails = (e, spot) => {
     e.preventDefault();

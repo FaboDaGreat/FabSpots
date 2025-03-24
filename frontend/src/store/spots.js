@@ -70,17 +70,19 @@ const initialState = {
 
 function spotsReducer (state = initialState, action){
     let newState; 
+    let spots;
+    let newById = {};
 
     switch(action.type){
         case GET_ALL_SPOTS:
                 newState = {...state};
                 
-                const spots = action.payload.Spots
+                spots = action.payload.Spots
                 
                 newState.allSpots = spots; 
 
                 
-                let newById = {};
+                
                 for(let spot of spots){
                     newById[spot.id] = spot; 
                 }
