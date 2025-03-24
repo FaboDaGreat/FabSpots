@@ -1,39 +1,39 @@
-import React, { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import DetailsCard from "./DetailsCard";
-import { getAllSpotsThunk } from "../../store/spots";
-
-
-
+import { getSpotByIdThunk } from "../../store/spots";
 
 const SpotDetails = () => {
-
-    
-    const dispatch = useDispatch()
-
-    const getAllSpots = async () => {
-    
-        await dispatch(getAllSpotsThunk());
-      }
-    
-    useEffect(() => {
-        
-        getAllSpots()
-    
-    });
- 
-    
-    const {id} = useParams();
+    const { id } = useParams();
+    const dispatch = useDispatch();
+    const [isLoaded, setIsLoaded] = useState(false);
     const spot = useSelector((state) => state.spotsReducer.byId[id]);
 
-    
-  return (
-        <div>
-            <DetailsCard spot={spot} />
-        </div>
-    )
+    useEffect(() => {
 
-}
+        const getSpotById = async () => {
 
-export default SpotDetails
+            await dispatch(getSpotByIdThunk(id))
+            setIsLoaded(true);
+            
+        }
+        
+        if (!isLoaded) {
+            getSpotById();
+        }
+    }, [isLoaded, dispatch, id]);
+
+
+    if (!isLoaded) {
+        return <h1>Loading...</h1>
+    } else {
+        return (
+                <DetailsCard spot={spot} />
+        );
+    }
+
+};
+
+export default SpotDetails;
+
