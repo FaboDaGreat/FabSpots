@@ -20,12 +20,7 @@ module.exports = {
         spotId: 2,
         review: 'had fun staying at this place',
         stars: 4,
-      }, {
-        userId: 3,
-        spotId: 3,
-        review: 'dificult to find a parking spot but enjoyed the stay',
-        stars: 3,
-      }, {
+      },{
         userId: 1,
         spotId: 4,
         review: 'the heat was not working, do not recommend!!',
@@ -39,7 +34,7 @@ module.exports = {
         userId: 3,
         spotId: 5,
         review: 'the owner did not cooperate at all, were up all night in cold',
-        stars: 1,
+        stars: 2,
       },
     ], { validate: true });
   },

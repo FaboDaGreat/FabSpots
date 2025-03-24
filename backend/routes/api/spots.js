@@ -68,15 +68,22 @@ router.get('/', async (req, res, next) => {
 
     for (let spot of spots) {
       const spotObj = await spot.toJSON();
-      console.log(spotObj)
+
       // gett the average of all the reviews per spot
       let sum = 0;
+      let avgRating
       for (let i = 0; i < spotObj.Reviews.length; i++) {
         let review = spotObj.Reviews[i];
-        console.log(review);
+
         sum += review.stars;
       }
-      const avgRating = sum / spotObj.Reviews.length;
+
+      if (sum === 0){
+        avgRating = 'New';
+      }else {
+      avgRating = sum / spotObj.Reviews.length;
+      }
+      
       spotObj.avgRating = avgRating;
 
       // Get the previewImage

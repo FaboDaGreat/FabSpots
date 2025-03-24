@@ -35,6 +35,9 @@ const router = createBrowserRouter([
       {
         path: '/spots/:id',
         element: <SpotDetails />
+      },
+      {
+        path: '/spots/new'
       }
     ]
   }
