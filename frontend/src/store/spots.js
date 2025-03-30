@@ -4,6 +4,7 @@ import { csrfFetch } from "./csrf";
 // ----- ACTION TYPE -----
 const GET_ALL_SPOTS = "spots/getAllSpots";
 const GET_SPOT_BY_ID = "spots/getSpotById";
+const CREATE_SPOT = "spots/createSpot"
 
 // ------- ACTION CREATOR ---------
 const getAllSpots = (spots) => {
@@ -16,6 +17,13 @@ const getAllSpots = (spots) => {
 const getSpotById = (spot) => {
     return {
       type: GET_SPOT_BY_ID,
+      payload: spot,
+    };
+  };
+
+  const createSpot = (spot) => {
+    return {
+      type: CREATE_SPOT,
       payload: spot,
     };
   };
@@ -58,6 +66,30 @@ export const getSpotByIdThunk = (id) => async (dispatch) => {
     }
 };
 
+export const createSpotThunk = (spot) => async (dispatch) => {
+    
+        const { address, city, state, country, lat, lng, name, description, price, url } = spot;
+        const res = await csrfFetch("/api/spots/", {
+            method: "POST",
+            body: JSON.stringify({
+                address, 
+                city, 
+                state, 
+                country, 
+                lat, 
+                lng, 
+                name, 
+                description, 
+                price,
+                url
+            })
+        }); 
+        
+            const data = await res.json();
+            
+            dispatch(createSpot(data));
+        }
+
   
 
 
@@ -96,6 +128,17 @@ function spotsReducer (state = initialState, action){
                 newState = { ...state };
                 newState.byId = { ...state.byId, [action.payload.id]: action.payload };
                 return newState;
+
+
+        case CREATE_SPOT:
+                newState = { ...state};
+
+                newState.allSpots = action.payload
+                newState.byId = { ...state.byId, [action.payload.id]: action.payload };
+            
+                return newState;
+
+
           
 
         default:

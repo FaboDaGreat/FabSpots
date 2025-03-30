@@ -119,7 +119,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.DECIMAL(10, 2),
         allowNull: false,
         validate: {
-          isDecimal: true
+          isDecimal: true,
+          min: {
+            args: [0.01], 
+            msg: "Price must be a positive number greater than 0."
+          }
         }
       },
       createdAt: {
