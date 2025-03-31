@@ -12,10 +12,10 @@ function ProfileButton({ user }) {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const toggleMenu = (e) => {
-    e.stopPropagation(); // Prevent bubbling up to document and triggering closeMenu
+    e.stopPropagation();
     setShowMenu(!showMenu);
   };
 
@@ -39,13 +39,29 @@ function ProfileButton({ user }) {
     e.preventDefault();
     dispatch(sessionActions.logout());
     closeMenu();
-    navigate("/")
+    navigate("/");
   };
 
   const createASpot = (e) => {
     e.preventDefault();
-    navigate('/spots/new')
-  }
+    navigate('/spots/new');
+  };
+
+  const manageSpots = (e) => {
+    e.preventDefault();
+    navigate('/spots/manage'); // Assumes '/spots/manage' is the route for managing spots
+  };
+
+  const demoLogin = (e) => {
+    e.preventDefault();
+    dispatch(sessionActions.login({ credential: 'demo@user.io', password: 'password' }));
+    closeMenu();
+  };
+
+  const goHome = (e) => {
+    e.preventDefault();
+    navigate("/");
+  };
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
 
@@ -59,7 +75,7 @@ function ProfileButton({ user }) {
           Create a New Spot
         </button>
       )}
-     
+
       <button onClick={toggleMenu}>
         <FaUserCircle />
       </button>
@@ -72,11 +88,17 @@ function ProfileButton({ user }) {
             </li>
             <li>{user.email}</li>
             <li>
+              <button onClick={manageSpots}>Manage Spots</button>
+            </li>
+            <li>
               <button onClick={logout}>Log Out</button>
             </li>
           </>
         ) : (
           <>
+            <li>
+              <button onClick={(e) => goHome(e)}>Home</button>
+            </li>
             <OpenModalMenuItem
               itemText="Log In"
               onItemClick={closeMenu}
@@ -87,6 +109,9 @@ function ProfileButton({ user }) {
               onItemClick={closeMenu}
               modalComponent={<SignupFormModal />}
             />
+            <li>
+              <button onClick={demoLogin}>Demo User</button>
+            </li>
           </>
         )}
       </ul>
