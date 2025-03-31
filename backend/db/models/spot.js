@@ -41,7 +41,6 @@ module.exports = (sequelize, DataTypes) => {
       ownerId: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        unique: true,
       },
 
       address: {

@@ -85,10 +85,20 @@ export const createSpotThunk = (spot) => async (dispatch) => {
             })
         }); 
         
+        if(res.ok){
+            
             const data = await res.json();
             
             dispatch(createSpot(data));
+
+            return data
+        } else {
+            throw res;
         }
+
+    
+
+}
 
   
 
