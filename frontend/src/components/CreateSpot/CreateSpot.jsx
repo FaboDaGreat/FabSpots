@@ -1,72 +1,67 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import * as spotsActions from '../../store/spots'
+import * as spotsActions from '../../store/spots';
 import './CreateSpot.css';
 
-
 const CreateSpot = () => {
-  
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  
+  const [address, setAddress] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [country, setCountry] = useState("");
+  const [lat, setLat] = useState("");
+  const [lng, setLng] = useState("");
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [price, setPrice] = useState("");
+  const [previewUrl, setPreviewUrl] = useState("");
+  const [image1, setImage1] = useState("");
+  const [image2, setImage2] = useState("");
+  const [image3, setImage3] = useState("");
+  const [image4, setImage4] = useState("");
+  const [errors, setErrors] = useState({});
 
-    const [address, setAddress] = useState("");
-    const [city, setCity] = useState("");
-    const [state, setState] = useState("");
-    const [country, setCountry] = useState("");
-    const [lat, setLat] = useState("");
-    const [lng, setLng] = useState("");
-    const [name, setName] = useState("");
-    const [description, setDescription] = useState("");
-    const [price, setPrice] = useState("");
-    const [url, setUrl] = useState("")
-    //const [images, setimages] = useState("", "", "", "")
-    const [errors, setErrors] = useState({});
-  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  
+    try {
 
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-    
-      try {
-        const newSpot = await dispatch(
-          spotsActions.createSpotThunk({
-            address,
-            city,
-            state,
-            country,
-            lat,
-            lng,
-            name,
-            description,
-            price,
-            url
-          })
-        );
-    
-        if (newSpot && newSpot.id) {
-          navigate(`/spots/${newSpot.id}`);
-        }
-      } catch (res) {
-          const data = await res.json();
-          if (data?.errors) {
-            setErrors(data.errors);
-          }
-    
+      const url = [previewUrl, image1, image2, image3, image4]
+
+      
+      const newSpot = await dispatch(
+        spotsActions.createSpotThunk({
+          address,
+          city,
+          state,
+          country,
+          lat,
+          lng,
+          name,
+          description,
+          price,
+          url
+        })
+      );
+
+      if (newSpot && newSpot.id) {
+        navigate(`/spots/${newSpot.id}`);
       }
-    };
-    
-      
-      
+    } catch (res) {
+      const data = await res.json();
+      if (data?.errors) {
+        setErrors(data.errors);
+      }
+    }
+  };
 
   return (
     <form onSubmit={handleSubmit} className="create-spot-form">
       <h1>Create a New Spot</h1>
 
-      
       <section>
         <h2>{"Where's your place located?"}</h2>
         <p>
@@ -83,7 +78,7 @@ const CreateSpot = () => {
             required
           />
         </label>
-        {errors.country && <p>{errors.country}</p>}
+        {errors.country && <p className="error-message">{errors.country}</p>}
         <label>
           Street Address
           <input
@@ -94,7 +89,7 @@ const CreateSpot = () => {
             required
           />
         </label>
-        {errors.address && <p>{errors.address}</p>}
+        {errors.address && <p className="error-message">{errors.address}</p>}
         <label>
           City
           <input
@@ -105,24 +100,22 @@ const CreateSpot = () => {
             required
           />
         </label>
-        {errors.city && <p>{errors.city}</p>}
+        {errors.city && <p className="error-message">{errors.city}</p>}
         <label>
           State
           <input
             type="text"
-            name="state"
             placeholder="State"
             value={state}
             onChange={(e) => setState(e.target.value)}
             required
           />
         </label>
-        {errors.state && <p>{errors.state}</p>}
+        {errors.state && <p className="error-message">{errors.state}</p>}
         <label>
           Latitude
           <input
             type="text"
-            name="latitude"
             placeholder="Latitude"
             value={lat}
             onChange={(e) => setLat(e.target.value)}
@@ -134,14 +127,13 @@ const CreateSpot = () => {
           Longitude
           <input
             type="text"
-            name="longitude"
             placeholder="Longitude"
             value={lng}
             onChange={(e) => setLng(e.target.value)}
             required
           />
         </label>
-        {errors.lng && <p>{errors.lng}</p>}
+        {errors.lng && <p className="error-message">{errors.lng}</p>}
       </section>
 
       <section>
@@ -151,13 +143,12 @@ const CreateSpot = () => {
           fast wifi or parking, and what you love about the neighborhood.
         </p>
         <textarea
-          name="description"
           placeholder="Please write at least 30 characters"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-            required
+          required
         />
-        {errors.description && <p>{errors.description}</p>}
+        {errors.description && <p className="error-message">{errors.description}</p>}
       </section>
 
       <section>
@@ -165,13 +156,12 @@ const CreateSpot = () => {
         <p>{"Catch guests' attention with a spot title that highlights what makes your place special."}</p>
         <input
           type="text"
-          name="name"
           placeholder="Name of your spot"
           value={name}
           onChange={(e) => setName(e.target.value)}
-            required
+          required
         />
-        {errors.name && <p>{errors.name}</p>}
+        {errors.name && <p className="error-message">{errors.name}</p>}
       </section>
 
       <section>
@@ -182,13 +172,12 @@ const CreateSpot = () => {
         </p>
         <input
           type="text"
-          name="price"
           placeholder="Price per night (USD)"
           value={price}
           onChange={(e) => setPrice(e.target.value)}
-            required
+          required
         />
-        {errors.price && <p>{errors.price}</p>}
+        {errors.price && <p className="error-message">{errors.price}</p>}
       </section>
 
       <section>
@@ -198,22 +187,58 @@ const CreateSpot = () => {
           Preview Image URL
           <input
             type="text"
-            name="previewImage"
             placeholder="Preview Image URL"
-            value={url}
-            onChange={(e) => setUrl(e.target.value)}
+            value={previewUrl}
+            onChange={(e) => setPreviewUrl(e.target.value)}
             required
           />
         </label>
-       
+        {errors.url && <p className="error-message">{errors.url}</p>}
+        <label>
+          Image URL
+          <input
+            type="text"
+            placeholder="Image URL"
+            value={image1}
+            onChange={(e) => setImage1(e.target.value)}
+          />
+        </label>
+        {errors.url && <p className="error-message">{errors.url}</p>}
+        <label>
+          Image URL
+          <input
+            type="text"
+            placeholder="Image URL"
+            value={image2}
+            onChange={(e) => setImage2(e.target.value)}
+          />
+        </label>
+        {errors.url && <p className="error-message">{errors.url}</p>}
+        <label>
+          Image URL
+          <input
+            type="text"
+            placeholder="Image URL"
+            value={image3}
+            onChange={(e) => setImage3(e.target.value)}
+          />
+        </label>
+        {errors.url && <p className="error-message">{errors.url}</p>}
+        <label>
+          Image URL
+          <input
+            type="text"
+            placeholder="Image URL"
+            value={image4}
+            onChange={(e) => setImage4(e.target.value)}
+          />
+        </label>
+        {errors.url && <p className="error-message">{errors.url}</p>}
       </section>
-
-      
 
       <button type="submit">Create Spot</button>
     </form>
   );
 };
-
 
 export default CreateSpot;

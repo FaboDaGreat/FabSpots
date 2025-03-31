@@ -42,7 +42,7 @@ const Splash = () => {
         <div className="cardListContainer">
           {
             spots.map((spot, idx) => (
-              <div className="cardContainer" key={`${idx}-${spot.id}`}
+              <div className="cardContainer" title={spot.name} key={`${idx}-${spot.id}`}
                 onClick={(e) => spotDetails(e, spot)}>
                 <SpotCard spot={spot} />
               </div>))

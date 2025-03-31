@@ -24,7 +24,7 @@ const validateSpot = [
     .withMessage('Country is required.'),
   check('lat')
     .exists({ checkFalsy: true })
-    .withMessage('Latitud must be within -90 and 90.'),
+    .withMessage('Latitude must be within -90 and 90.'),
   check('lng')
     .exists({ checkFalsy: true })
     .withMessage('Longitude must be within -180 and 180.'),
@@ -118,9 +118,19 @@ router.post('/', requireAuth, validateSpot, async (req, res, next) => {
       address, city, state, country, lat, lng, name, description, price
     });
 
-    await SpotImage.create({
-      spotId: newSpot.id, url
-    });
+    for(let i = 0; i < url.length; i++){
+      
+      if (i === 0){
+        await SpotImage.create({
+          spotId: newSpot.id, url: url[i], preview: true
+        });
+      }else if (url[i] !== "") {
+        await SpotImage.create({
+          spotId: newSpot.id, url: url[i]
+        });
+      }
+      
+  }
 
     res.status(201);
     return res.json(newSpot);
@@ -157,7 +167,8 @@ router.get('/:id', async (req, res, next) => {
             model: User,
             as: 'Owner',
             attributes: ['id', 'firstName', 'lastName']
-          }
+          },
+          { model: Review }
         ]
       });
 
@@ -167,7 +178,27 @@ router.get('/:id', async (req, res, next) => {
       return next(err);
     }
 
-    return res.json(spot);
+    let sum = 0;
+    let avgRating
+    for (let i = 0; i < spot.Reviews.length; i++) {
+      let review = spot.Reviews[i];
+
+      sum += review.stars;
+    }
+
+    if (sum === 0){
+      avgRating = 'New';
+    }else {
+    avgRating = sum / spot.Reviews.length;
+    }
+
+    const spotWithAvgRating = {
+      ...spot.toJSON(),
+      avgRating: avgRating
+    };
+
+
+    return res.json(spotWithAvgRating);
   } catch (error) {
     next(error);
   }
