@@ -19,7 +19,7 @@ const DetailsCard = ({ spot }) => {
                 <p>{spot.description}</p>
             </div>
             <div className="calloutBox">
-        <span className="spotPrice">{`$${spot.price}night`}</span>
+        <span className="spotPrice">{`$${spot.price} night`}</span>
         <span className="reviewInfo">{`★${spot.avgRating} ${spot.Reviews.length} reviews`}</span>
         <button className="reserveButton" onClick={() => alert("Feature coming soon")}>Reserve</button>
 

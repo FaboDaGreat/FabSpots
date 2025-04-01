@@ -5,6 +5,7 @@ import { csrfFetch } from "./csrf";
 const GET_ALL_SPOTS = "spots/getAllSpots";
 const GET_SPOT_BY_ID = "spots/getSpotById";
 const CREATE_SPOT = "spots/createSpot"
+const MANAGE_SPOTS = "spots/manageSpots"
 
 // ------- ACTION CREATOR ---------
 const getAllSpots = (spots) => {
@@ -27,6 +28,13 @@ const getSpotById = (spot) => {
       payload: spot,
     };
   };
+
+  const manageSpots = (spots) => {
+    return {
+        type: GET_ALL_SPOTS,
+        payload: spots
+    }
+};
   
 
 
@@ -100,6 +108,21 @@ export const createSpotThunk = (spot) => async (dispatch) => {
 
 }
 
+export const manageSpotsThunk = () => async (dispatch) => {
+    try {
+        const res = await csrfFetch("/api/spots/current")
+
+        if (res.ok) {
+            const data = await res.json();
+            dispatch(manageSpots(data))
+        } else {
+            throw res;
+        }
+    } catch (error) {
+        return error
+    }
+}
+
   
 
 
@@ -147,6 +170,25 @@ function spotsReducer (state = initialState, action){
                 newState.byId = { ...state.byId, [action.payload.id]: action.payload };
             
                 return newState;
+
+
+        case MANAGE_SPOTS:
+
+        newState = {...state};
+                
+                spots = action.payload.Spots
+                
+                newState.allSpots = spots; 
+
+                
+                
+                for(let spot of spots){
+                    newById[spot.id] = spot; 
+                }
+                newState.byId = newById; 
+
+                
+            return newState;
 
 
           
