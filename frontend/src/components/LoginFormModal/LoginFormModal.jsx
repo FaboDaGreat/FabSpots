@@ -10,18 +10,26 @@ function LoginFormModal() {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
+  
 
   const demoLogin = (e) => {
     e.preventDefault();
     return dispatch(sessionActions.login({ credential: 'demo@user.io', password: 'password' }))
-    .then(closeModal);
+    .then(() => {
+      closeModal();
+      window.location.href = "/";
+    })
+
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors({});
     return dispatch(sessionActions.login({ credential, password }))
-      .then(closeModal)
+    .then(() => {
+      closeModal();
+      window.location.href = "/";
+    })
       .catch(async (res) => {
         const data = await res.json();
         if (data && data.errors) {

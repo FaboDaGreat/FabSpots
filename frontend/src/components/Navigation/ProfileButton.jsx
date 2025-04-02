@@ -39,7 +39,7 @@ function ProfileButton({ user }) {
     e.preventDefault();
     dispatch(sessionActions.logout());
     closeMenu();
-    navigate("/");
+    window.location.href = "/";
   };
 
   const createASpot = (e) => {
