@@ -1,35 +1,57 @@
-// import { csrfFetch } from "./csrf";
+import { csrfFetch } from "./csrf";
 
 
-// // ----- ACTION TYPE -----
-// const GET_REVIEWS_BY_ID = "spots/getReviewsById";
+// ----- ACTION TYPE -----
+const CREATE_REVIEW = "reviews/createReview";
 
-// // ------- ACTION CREATOR ---------
-// const getReviewsById = (reviews) => {
-//     return {
-//         type: GET_REVIEWS_BY_ID,
-//         payload: reviews
-//     }
-// }
+// ------- ACTION CREATOR ---------
+const createReview = (review) => {
+    return {
+        type: CREATE_REVIEW,
+        payload: review
+    }
+}
 
-// // ----- THUNK ------
-// export const getReviewsByIdThunk = (id) => async (dispatch) => {
+// ----- THUNK ------
+export const createReviewThunk = (spotId, reviewData) => async (dispatch) => {
 
-// }
+    const { review, stars} = reviewData;
+    const res = await csrfFetch(`/api/spots/${spotId}/reviews/`, {
+        method: "POST",
+        body: JSON.stringify({
+            review,
+            stars
+        })
+    });
+
+    if(res.ok){
+        const data = await res.json();
+        dispatch(createReview(data));
+        return data
+    } else {
+        throw res;
+    }
+}
  
-// // ------ REDUCER -------
-// const initialState = {
-//     byId: []
-// };
+// ------ REDUCER -------
+const initialState = {
+    allReviews: []
+};
 
-// function reviewsReducer (state = initialState, action){
-//     let newState; 
-//     let reviews;
-//     let newById = [];
+function reviewsReducer (state = initialState, action){
+    let newState;
 
-//     switch(action.type){
-        
-//     }
-// }
+    switch(action.type){
+        case CREATE_REVIEW:
+            newState = {...state};
+            newState.allReviews = action.payload;
 
-// export default reviewsReducer;
+            return newState;
+
+
+    default:
+        return state;
+    }
+}
+
+export default reviewsReducer;

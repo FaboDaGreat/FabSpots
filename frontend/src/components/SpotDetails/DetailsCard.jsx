@@ -29,10 +29,8 @@ const DetailsCard = ({ spot }) => {
                 <button className="reserveButton" onClick={() => alert("Feature coming soon")}>Reserve</button>
 
             </div>
-            
             <ReviewBox spot={spot} />
-
-        </div>
+             </div>
     );
 };
 

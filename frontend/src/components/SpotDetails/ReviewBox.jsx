@@ -1,7 +1,10 @@
 import { useSelector } from "react-redux";
+import ReviewModal from "../ReviewModal";
+import OpenModalButton from "../OpenModalButton/OpenModalButton";
+import "./ReviewBox.css";
 
     const ReviewBox = ({ spot }) => {
-    const sortedReviews = [...spot.Reviews].sort((a, b) => b - a);
+    const sortedReviews = [...spot.Reviews].sort((a, b) => b.id - a.id);
     const user = useSelector((state) => state.session.user);
     const hasPostedReview = user ? spot.Reviews.some((review) => review.userId === user.id) : false;
   
@@ -14,7 +17,12 @@ import { useSelector } from "react-redux";
                         </h2>
                         
                         {user && !hasPostedReview && user.id !== spot.ownerId && (
-        <button className="postReviewButton">Post Your Review</button>
+        <OpenModalButton 
+        className="reviewModalButton"
+        modalComponent={<ReviewModal spotId={spot.id} />} 
+        buttonText="Post Your Review"
+        />
+
       )}
 
         {sortedReviews.length > 0 ? (
@@ -44,3 +52,5 @@ import { useSelector } from "react-redux";
   };
   
   export default ReviewBox;
+  
+  
