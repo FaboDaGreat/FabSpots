@@ -166,8 +166,8 @@ function spotsReducer (state = initialState, action){
         case CREATE_SPOT:
                 newState = { ...state};
 
-                newState.allSpots = action.payload
-                newState.byId = { ...state.byId, [action.payload.id]: action.payload };
+                newState.allSpots = action.payload;
+                newState.byId = { [action.payload.id]: action.payload };
             
                 return newState;
 

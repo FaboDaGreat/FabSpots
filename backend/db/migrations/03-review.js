@@ -26,10 +26,15 @@ module.exports = {
                 type: Sequelize.INTEGER,
                 allowNull: false,
                 references: {
-                    model: "Spots"
+                    model: "Spots",
+                    key: "id"
                 }
 
             },
+            name: {
+                type: Sequelize.STRING(50),
+                allowNull: false,
+              },
             review: {
                 type: Sequelize.STRING(500),
                 allowNull: false

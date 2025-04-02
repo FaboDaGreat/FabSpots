@@ -338,14 +338,15 @@ router.delete('/:spotId', requireAuth, async (req, res, next) => {
 
 
 // Creating a Review based on a spot id
-router.post('/:spotId/reviews', requireAuth, validateReview, async (req, res, next) => {
+router.post('/:spotId/reviews', requireAuth, async (req, res, next) => {
   try {
     // How do I grab the spot id that was used on postman
-    // req.paramgs is an object of parameters
+    // req.params is an object of parameters
     // This is one way to grab it
     // const spotId = req.params.spotId
     const { spotId } = req.params;
     const userId = req.user.id;
+    const name = req.user.firstName;
     const { review, stars } = req.body;
 
     // Find out if the spot exists
@@ -357,30 +358,19 @@ router.post('/:spotId/reviews', requireAuth, validateReview, async (req, res, ne
       throw noResourceError;
     }
 
-    // If it does exist -> See if the current user made a review already]
-    const userReview = await Review.findOne({
-      where: {
-        userId: userId
-      }
-    });
 
-    // if userReview is null -> we did not make a review already
-    if (!userReview) {
+   
       // Create the new Review
-      const newReview = await Review.create({ userId, spotId, review, stars });
+      const newReview = await Review.create({ userId, spotId, name, review, stars });
       res.status(200);
       return res.json(newReview);
-    } else {
-      // TODO: Edit this error message and status code based on api docs
-      let alreadyReviewedError = new Error("User already has a review for this spot");
-      alreadyReviewedError.status = 500;
-      throw alreadyReviewedError;
-    }
+    
 
   } catch (error) {
     next(error);
   }
 })
+
 
 
 

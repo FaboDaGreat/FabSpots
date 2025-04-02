@@ -1,2 +1,2 @@
-import SpotDetails from "./SpotDetails";
-export default SpotDetails
+import SpotDetailsPage from "./SpotDetailsPage"
+export default SpotDetailsPage

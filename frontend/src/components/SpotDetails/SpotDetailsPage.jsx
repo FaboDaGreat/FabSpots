@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import DetailsCard from "./DetailsCard";
 import { getSpotByIdThunk } from "../../store/spots";
 
-const SpotDetails = () => {
+const SpotDetailsPage = () => {
     const { id } = useParams();
     const dispatch = useDispatch();
     const [isLoaded, setIsLoaded] = useState(false);
@@ -35,5 +35,5 @@ const SpotDetails = () => {
 
 };
 
-export default SpotDetails;
+export default SpotDetailsPage;
 

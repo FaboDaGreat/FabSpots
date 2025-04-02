@@ -39,7 +39,7 @@ function ProfileButton({ user }) {
     e.preventDefault();
     dispatch(sessionActions.logout());
     closeMenu();
-    navigate("/");
+    window.location.href = "/";
   };
 
   const createASpot = (e) => {
@@ -49,15 +49,10 @@ function ProfileButton({ user }) {
 
   const manageSpots = (e) => {
     e.preventDefault();
-    navigate('/spots/manage'); // Assumes '/spots/manage' is the route for managing spots
+    navigate('/spots/manage');
   };
 
-  const demoLogin = (e) => {
-    e.preventDefault();
-    dispatch(sessionActions.login({ credential: 'demo@user.io', password: 'password' }));
-    closeMenu();
-  };
-
+  
   const goHome = (e) => {
     e.preventDefault();
     navigate("/");
@@ -109,9 +104,7 @@ function ProfileButton({ user }) {
               onItemClick={closeMenu}
               modalComponent={<SignupFormModal />}
             />
-            <li>
-              <button onClick={demoLogin}>Demo User</button>
-            </li>
+            
           </>
         )}
       </ul>
