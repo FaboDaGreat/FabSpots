@@ -67,7 +67,18 @@ module.exports = {
         name: "Santa's Paradise",
         description: "Heaven is a place on Earth",
         price: 40.00
-      },
+      },{
+        ownerId: 4,
+        address: "2087 SE South Buttonwood Dr",
+        city: "Port St. Lucie",
+        state: "Florida",
+        country: "United States",
+        lat: 65.2234,
+        lng: 93.56987,
+        name: "Fab's Spot",
+        description: "You will probably wonder why this place feels so much like home. It was my childhood home so that makes plenty of sense!",
+        price: 150.00 
+      }
     ], { validate: true });
   },
 

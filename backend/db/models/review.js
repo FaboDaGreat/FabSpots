@@ -34,6 +34,13 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         unique: true,
       },
+      name: {
+        type: DataTypes.STRING(256),
+        allowNull: false,
+        validate: {
+          isAlpha: true
+      }
+    },
       spotId: {
         type: DataTypes.INTEGER,
         allowNull: false,

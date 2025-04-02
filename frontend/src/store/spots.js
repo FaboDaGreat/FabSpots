@@ -167,7 +167,7 @@ function spotsReducer (state = initialState, action){
                 newState = { ...state};
 
                 newState.allSpots = action.payload
-                newState.byId = { ...state.byId, [action.payload.id]: action.payload };
+                newState.byId = { [action.payload.id]: action.payload };
             
                 return newState;
 

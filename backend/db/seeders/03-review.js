@@ -10,31 +10,36 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await Review.bulkCreate([
       {
-        userId: 1,
+        userId: 4,
         spotId: 1,
-        review: 'Such a lovely place to stay at',
+        review: 'Such a lovely place to stay at!',
         stars: 5,
+        name: 'Fabian'
       },
       {
-        userId: 2,
-        spotId: 2,
-        review: 'had fun staying at this place',
-        stars: 4,
-      },{
-        userId: 1,
-        spotId: 4,
-        review: 'the heat was not working, do not recommend!!',
-        stars: 2,
-      }, {
-        userId: 2,
-        spotId: 5,
-        review: 'got to create so many memories with my family, will definitely come back',
-        stars: 5,
-      }, {
         userId: 3,
-        spotId: 5,
-        review: 'the owner did not cooperate at all, were up all night in cold',
+        spotId: 2,
+        review: 'Had a lot of fun staying at this place.',
+        stars: 4,
+        name: 'Spongebob'
+      },{
+        userId: 2,
+        spotId: 4,
+        review: 'The heat was not working! Do not recommend!!',
         stars: 2,
+        name: 'Patrick'
+      }, {
+        userId: 2,
+        spotId: 5,
+        review: 'Got to create so many memories with my family. I will definitely be back!',
+        stars: 5,
+        name: 'Patrick'
+      }, {
+        userId: 1,
+        spotId: 5,
+        review: 'The owner did not cooperate at all! Whenever we needed something, there was no response like when we asked for help turning on the heat. We ended up being up all night in the cold!!',
+        stars: 2,
+        name: 'Leroy'
       },
     ], { validate: true });
   },
