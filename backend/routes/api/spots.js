@@ -346,6 +346,7 @@ router.post('/:spotId/reviews', requireAuth, validateReview, async (req, res, ne
     // const spotId = req.params.spotId
     const { spotId } = req.params;
     const userId = req.user.id;
+    const name = req.user.firstName;
     const { review, stars } = req.body;
 
     // Find out if the spot exists
@@ -367,7 +368,7 @@ router.post('/:spotId/reviews', requireAuth, validateReview, async (req, res, ne
     // if userReview is null -> we did not make a review already
     if (!userReview) {
       // Create the new Review
-      const newReview = await Review.create({ userId, spotId, review, stars });
+      const newReview = await Review.create({ userId, spotId, name, review, stars });
       res.status(200);
       return res.json(newReview);
     } else {

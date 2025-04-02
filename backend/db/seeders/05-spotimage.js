@@ -35,6 +35,15 @@ module.exports = {
         url: "https://images.pexels.com/photos/731082/pexels-photo-731082.jpeg?auto=compress&cs=tinysrgb&w=600",
         preview: true
       },
+      {
+        spotId: 6,
+        url: "https://maps.googleapis.com/maps/api/streetview?channel=rdc-streetview&client=gme-movesalesinc&location=2087%20SE%20South%20Buttonwood%20Dr%2C%20Port%20St%20Lucie%2C%20FL%2034952&size=932x420&source=outdoor&signature=qgodbiNFiDjqSuXLHQUXWlRSI-w=",
+        preview: true
+      },
+      {
+        spotId: 6,
+        url: "https://imagescdn.homes.com/i2/e06w1xnzDTUqNeC0LhSNzkX4109eHNLihePgKDqiHVw/102/canal-pointe-port-saint-lucie-fl-neighborhoodphoto.jpg?p=1"
+      }
 
     ], { validate: true });
   },

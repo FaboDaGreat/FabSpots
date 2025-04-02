@@ -30,6 +30,10 @@ module.exports = {
                 }
 
             },
+            name: {
+                type: Sequelize.STRING(50),
+                allowNull: false,
+              },
             review: {
                 type: Sequelize.STRING(500),
                 allowNull: false
